@@ -35,4 +35,22 @@ public class EnfermeraController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Enfermera> actualizarMedicamento(@PathVariable Integer id, @RequestBody Enfermera m) {
+        Enfermera enfermera = enfermeraS.findById(Long.valueOf(id));
+        if (enfermera == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                enfermera.setNombre(m.getNombre());
+                enfermera.setAñosExp(m.getAñosExp());
+                enfermera.setTitulo(m.getTitulo());
+                enfermera.setEdad(m.getEdad());
+                return new ResponseEntity<>(enfermeraS.save(m), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
 }

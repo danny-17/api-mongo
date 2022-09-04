@@ -1,7 +1,9 @@
 package com.example.crud.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "medico")
 public class Medico {
 
     @Id

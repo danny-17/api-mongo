@@ -33,4 +33,23 @@ public class MedicoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Medico> actualizarMedicamento(@PathVariable Integer id, @RequestBody Medico m) {
+        Medico medico = medicoS.findById(Long.valueOf(id));
+        if (medico == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                medico.setNombre(m.getNombre());
+                medico.setApellido(m.getApellido());
+                medico.setEspecialidad(m.getEspecialidad());
+                medico.setEdad(m.getEdad());
+                medico.setLocalidad(m.getLocalidad());
+                return new ResponseEntity<>(medicoS.save(m), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
 }
